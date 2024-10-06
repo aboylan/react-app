@@ -6,20 +6,31 @@ const initialDataForm = {
     price: ''
 };
 
-export const ProductForm = () => {
+export const ProductForm = ({ handlerAdd }) => {
 
     const [form, setForm] = useState(initialDataForm);
 
     const { name, description, price } = form;
     return (
-        <form>
+        <form onSubmit={(event) => {
+            event.preventDefault();
+
+            if(!name || !description || !price) {
+                alert('Debe de completar los datos del formulario!');
+                return;
+            }
+
+            // console.log(form);
+            handlerAdd(form);
+            setForm(initialDataForm);
+        }}>
             <div>
                 <input placeholder="Name"
                     style={{ 'marginBottom': '4px' }}
                     name="name"
                     value={name}
                     onChange={(event) => setForm({
-                        form,
+                        ...form,
                         name: event.target.value
                     })}
                 />
@@ -30,7 +41,7 @@ export const ProductForm = () => {
                     name="description"
                     value={description}
                     onChange={(event) => setForm({
-                        form,
+                        ...form,
                         description: event.target.value
                     })}
                 />
@@ -42,7 +53,7 @@ export const ProductForm = () => {
                     name="price"
                     value={price}
                     onChange={(event) => setForm({
-                        form,
+                        ...form,
                         price: event.target.value
                     })}
                 />
