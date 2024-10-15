@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const initialDataForm = {
     name: '',
@@ -6,16 +6,21 @@ const initialDataForm = {
     price: ''
 };
 
-export const ProductForm = ({ handlerAdd }) => {
+export const ProductForm = ({ productSelected, handlerAdd }) => {
 
     const [form, setForm] = useState(initialDataForm);
 
     const { name, description, price } = form;
+
+    useEffect(() => {
+        setForm(productSelected);
+    }, [productSelected]);
+
     return (
         <form onSubmit={(event) => {
             event.preventDefault();
 
-            if(!name || !description || !price) {
+            if (!name || !description || !price) {
                 alert('Debe de completar los datos del formulario!');
                 return;
             }
