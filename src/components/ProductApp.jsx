@@ -9,6 +9,7 @@ export const ProductApp = ({ title }) => {
     const [products, setProducts] = useState([]);
 
     const [productSelected, setProductSelected] = useState({
+        id: 0,
         name: '',
         description: '',
         price: ''
@@ -21,12 +22,22 @@ export const ProductApp = ({ title }) => {
 
     const handlerAddProduct = (product) => {
         console.log(product);
-        setProducts([...products, { ...product }]);
+
+        if (product.id > 0) {
+            setProducts(products.map(prod => {
+                if (prod.id == product.id) {
+                    return { ...product }
+                }
+                return prod;
+            }));
+        } else {
+            setProducts([...products, { ...product, id: new Date().getTime() }]);
+        }
     };
 
-    const handlerRemoveProduct = (name) => {
+    const handlerRemoveProduct = (id) => {
         console.log(name);
-        setProducts(products.filter(product => product.name != name));
+        setProducts(products.filter(product => product.id != id));
     };
 
     const handlerProductSelected = (product) => {
