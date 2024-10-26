@@ -1,3 +1,4 @@
+import axios from "axios";
 
 const initProducts = [
     {
@@ -14,6 +15,20 @@ const initProducts = [
     }
 ];
 
+const baseUrl = 'http://localhost:8080/products';
+
 export const listProduct = () => {
     return initProducts;
+};
+
+export const findAll = async () => {
+
+    try {
+        const response = await axios.get(baseUrl);
+        return response;
+    } catch (error) {
+        console.log(error);
+    }
+
+    return null;
 };

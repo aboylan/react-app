@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { listProduct } from '../services/ProductService';
+import { findAll } from '../services/ProductService';
 import { ProductGrid } from './ProductGrid';
 import PropTypes from 'prop-types';
 import { ProductForm } from './ProductForm';
@@ -15,9 +15,14 @@ export const ProductApp = ({ title }) => {
         price: ''
     });
 
+    const getProducts = async () => {
+        const result = await findAll();
+        // console.log(result);
+        setProducts(result.data._embedded.products);
+    };
+
     useEffect(() => {
-        const result = listProduct();
-        setProducts(result);
+        getProducts();
     }, []);
 
     const handlerAddProduct = (product) => {
@@ -56,7 +61,7 @@ export const ProductApp = ({ title }) => {
                         products.length > 0 ? <ProductGrid products={products} handlerRemove={handlerRemoveProduct} handlerProductSelected={handlerProductSelected} />
                             : <div className="alert alert-warning">No hay productos en el sistema!</div>
                     }
-                    
+
                 </div>
             </div>
         </div>
