@@ -33,7 +33,7 @@ export const findAll = async () => {
     return null;
 };
 
-export const create = async ({name, description, price}) => {
+export const create = async ({ name, description, price }) => {
 
     try {
         const response = await axios.post(baseUrl, {
@@ -48,7 +48,7 @@ export const create = async ({name, description, price}) => {
     return undefined;
 };
 
-export const update = async ({id, name, description, price}) => {
+export const update = async ({ id, name, description, price }) => {
 
     try {
         const response = await axios.put(`${baseUrl}/${id}`, {
@@ -61,4 +61,13 @@ export const update = async ({id, name, description, price}) => {
         console.log(error);
     }
     return undefined;
+};
+
+export const remove = async (id) => {
+
+    try {
+        await axios.delete(`${baseUrl}/${id}`);
+    } catch (error) {
+        console.log(error);
+    }
 };
